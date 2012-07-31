@@ -33,5 +33,6 @@ public class CalculatorActivity extends Activity {
 //        SharedPreferences pref = this.getSharedPreferences("MemoPrefs", MODE_PRIVATE);	//前回のを取得？
 //        et.setText(pref.getString("memo", ""));	//前回のをセット
 //        et.setSelection(pref.getInt("cursor", 0));
+//    	aaa
     }
 }
