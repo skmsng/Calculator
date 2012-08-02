@@ -2,15 +2,15 @@ package sample.application.calculator;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class CalculatorActivity extends Activity {
+	
+	Integer num1,num2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,15 +24,48 @@ public class CalculatorActivity extends Activity {
         return true;
     }
     
+    /**
+     * 数字が押されたとき
+     */
     public void numKeyOnClick(View v){
     	Button button = (Button)v;
+    	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
+    	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
     	
-    	Log.d("buttonのtext", button.getText().toString());
-    	//前回の画面を残す
-    	TextView et = (TextView) this.findViewById(R.id.displayPanel);	//今の画面（インスタンス）の取得
-  //      SharedPreferences pref = this.getSharedPreferences("MemoPrefs", MODE_PRIVATE);	//前回のを取得？
-    	et.setText(button.getText());	//前回のをセット
-//        et.setSelection(pref.getInt("cursor", 0));
-//    	aaa
+//    	Log.d("[tvのtext]", tv.getText().toString());					//ディスプレイの表示を取得
+    	
+    	tv.setText(tv.getText().toString() + button.getText().toString());
+
     }
+    /**
+     * +が押されたとき
+     */
+    public void addKeyOnClick(View v){
+    	Button button = (Button)v;
+    	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
+    	
+    	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
+    	String sNum = tv.getText().toString();
+    	num1 = Integer.parseInt(sNum);
+    	tv.setText("0");
+
+    }
+    
+    /**
+     * =が押されたとき
+     */
+    public void equalKeyOnClick(View v){
+    	Button button = (Button)v;
+    	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
+    	
+    	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
+    	String sNum = tv.getText().toString();
+    	num2 = Integer.parseInt(sNum);
+    	
+    	sNum = Integer.toString(num1 + num2);
+    	tv.setText(sNum);
+    }
+    
+    
+    
 }
