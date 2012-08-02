@@ -29,9 +29,9 @@ public class CalculatorActivity extends Activity {
     	
     	Log.d("buttonのtext", button.getText().toString());
     	//前回の画面を残す
-//    	TextView et = (TextView) this.findViewById(R.id.displayPanel);	//今の画面（インスタンス）の取得
-//        SharedPreferences pref = this.getSharedPreferences("MemoPrefs", MODE_PRIVATE);	//前回のを取得？
-//        et.setText(pref.getString("memo", ""));	//前回のをセット
+    	TextView et = (TextView) this.findViewById(R.id.displayPanel);	//今の画面（インスタンス）の取得
+  //      SharedPreferences pref = this.getSharedPreferences("MemoPrefs", MODE_PRIVATE);	//前回のを取得？
+    	et.setText(button.getText());	//前回のをセット
 //        et.setSelection(pref.getInt("cursor", 0));
 //    	aaa
     }
