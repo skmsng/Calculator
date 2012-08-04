@@ -30,6 +30,7 @@ public class CalculatorActivity extends Activity {
     public void numKeyOnClick(View v){
     	Button button = (Button)v;
     	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
+    	
     	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
     	
 //    	Log.d("[tvのtext]", tv.getText().toString());					//ディスプレイの表示を取得
@@ -47,8 +48,8 @@ public class CalculatorActivity extends Activity {
     	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
     	String sNum = tv.getText().toString();
     	num1 = Integer.parseInt(sNum);
+    	
     	tv.setText("0");
-
     }
     
     /**
