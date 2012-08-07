@@ -67,6 +67,6 @@ public class CalculatorActivity extends Activity {
     	tv.setText(sNum);
     }
     
-    
+    public String sNum1;
     
 }
