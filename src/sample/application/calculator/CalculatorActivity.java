@@ -1,5 +1,7 @@
 package sample.application.calculator;
 
+import java.text.DecimalFormat;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -10,7 +12,7 @@ import android.widget.TextView;
 
 public class CalculatorActivity extends Activity {
 	
-	Integer num1,num2;
+	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,8 @@ public class CalculatorActivity extends Activity {
     }
     
     /**
-     * 数字が押されたとき
-     */
+     * 数字が押されたとき（自作）
+     *
     public void numKeyOnClick(View v){
     	Button button = (Button)v;
     	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
@@ -37,17 +39,73 @@ public class CalculatorActivity extends Activity {
     	
     	tv.setText(tv.getText().toString() + button.getText().toString());
 
-    }
+    }*/
+    
     /**
+     * 数字が押されたとき（テキスト）
+     */
+    public void numKeyOnClick(View v){
+    	
+    	//CharSequence（親）をString（子）にキャストできる？androidの変な仕様？
+    	String strInKey = (String)((Button)v).getText();
+    	
+    	if(strInKey.equals(".")){
+    		if(this.strTemp.length()==0){
+	    		this.strTemp = "0.";
+	    	}else{
+	    		if(this.strTemp.indexOf(".") == -1){
+	    			this.strTemp = this.strTemp + ".";
+	    		}
+	    	}
+	    }else{
+	    	this.strTemp = this.strTemp + strInKey;
+	    }
+	    
+	    this.showNumber(this.strTemp);
+    }
+    
+    private void showNumber(String strNum) {
+    	
+    	DecimalFormat form = new DecimalFormat("#,##0");
+    	String strDecimal = "";
+    	String strInt = "";
+    	String fText = "";
+    	
+    	if(strNum.length() > 0){
+    		int decimalPoint = strNum.indexOf(".");
+    		if(decimalPoint > -1){
+    			strDecimal = strNum.substring(decimalPoint);
+    			strInt = strNum.substring(0,decimalPoint);
+    		}else{
+    			strInt = strNum;
+    		}
+    		fText = form.format(Double.parseDouble(strInt)) + strDecimal;
+    		
+    	}else{
+    		fText = "0";
+    	}
+    	
+    	((TextView)findViewById(R.id.displayPanel)).setText(fText);
+	}
+    
+    public void operatorKeyOnClick(View v){
+    	
+    }
+    
+    
+    
+
+	/**
      * +が押されたとき
      */
+    Integer num1,num2;
     public void addKeyOnClick(View v){
     	Button button = (Button)v;
     	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
     	
     	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
-    	String sNum = tv.getText().toString();
-    	num1 = Integer.parseInt(sNum);
+    	this.sNum1 = tv.getText().toString();
+    	num1 = Integer.parseInt(this.sNum1);
     	
     	tv.setText("0");
     }
@@ -60,13 +118,14 @@ public class CalculatorActivity extends Activity {
     	Log.d("[buttonのtext]", button.getText().toString());			//押されたボタンを取得
     	
     	TextView tv = (TextView) this.findViewById(R.id.displayPanel);
-    	String sNum = tv.getText().toString();
-    	num2 = Integer.parseInt(sNum);
+    	this.sNum1 = tv.getText().toString();
+    	num2 = Integer.parseInt(this.sNum1);
     	
-    	sNum = Integer.toString(num1 + num2);
-    	tv.setText(sNum);
+    	this.sNum1 = Integer.toString(num1 + num2);
+    	tv.setText(this.sNum1);
     }
     
-    public String sNum1;
+    public String sNum1 = new String();
+    public String strTemp = "";
     
 }
