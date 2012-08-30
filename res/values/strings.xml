@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_calculator">CalculatorActivity</string>
+    <string name="toast_div_by_zero">0で割ることはできません</string>
 
 </resources>
