@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -18,7 +19,14 @@ public class CalculatorActivity extends Activity {
     public String strTemp = "";
     public String strResult = "0";
     public Integer operator = 0;
-	
+    
+/*
+    public static String s1;
+    //初期化
+    static{
+    	s1 = "test";
+    }
+*/	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,9 +152,16 @@ public class CalculatorActivity extends Activity {
 		}
 	}
 	
-	
-	
-	
+	private void writePreferences(){
+		SharedPreferences prefs = getSharedPreferences("CalcPrefs", MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("strTemp", strTemp);
+		editor.putString("strResult", strResult);
+		editor.putInt("operator", operator);
+		
+		
+		
+	}
 	
 	
 
