@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,9 +33,20 @@ public class CalculatorActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        
+        this.readPreferences();
     }
 
+    
     @Override
+	protected void onStop() {
+		super.onStop();
+		
+		this.writePreferences();
+	}
+
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_calculator, menu);
         return true;
@@ -92,6 +104,31 @@ public class CalculatorActivity extends Activity {
     	((TextView)findViewById(R.id.displayPanel)).setText(fText);
 	}
     
+    public void functionKeyOnClick(View v){
+    	switch(v.getId()){
+    	case R.id.keypadAC:
+    		this.strTemp = "";
+    		this.strResult = "0";
+    		this.operator = 0;
+    		break;
+    	case R.id.keypadC:
+    		this.strTemp = "";
+    		break;
+    	case R.id.keypadBS:
+    		if(this.strTemp.length() == 0){
+    			return;
+    		}else{
+    			this.strTemp = this.strTemp.substring(0, this.strTemp.length()-1);
+    			break;
+    		}
+    	case R.id.keypadCopy:
+    		ClipboardManager cm = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);
+    		cm.setText(((TextView)this.findViewById(R.id.displayPanel)).getText());
+    	return;
+    	}
+    	this.showNumber(this.strTemp);
+    }
+    
     /**
      * +,-,*,/,= が押されたとき
      */
@@ -147,6 +184,7 @@ public class CalculatorActivity extends Activity {
 		
 		if(result.toString().indexOf(".") >= 0){
 			return result.toString().replaceAll("¥¥.0+$|0+$", "");
+//			return result.toString().replaceAll("¥.0+$", "");
 		}else{
 			return result.toString();
 		}
@@ -158,9 +196,16 @@ public class CalculatorActivity extends Activity {
 		editor.putString("strTemp", strTemp);
 		editor.putString("strResult", strResult);
 		editor.putInt("operator", operator);
-		
-		
-		
+		editor.putString("strDisplay", ((TextView)this.findViewById(R.id.displayPanel)).getText().toString());
+		editor.commit();		
+	}
+	
+	private void readPreferences(){
+		SharedPreferences prefs = getSharedPreferences("CalcPrefs", MODE_PRIVATE);
+		this.strTemp = prefs.getString("strTemp", "");
+		this.strResult = prefs.getString("strResult", "0");
+		operator = prefs.getInt("operator", 0);
+		((TextView)this.findViewById(R.id.displayPanel)).setText(prefs.getString("strDisplay", "0"));
 	}
 	
 	
