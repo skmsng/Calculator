@@ -183,7 +183,7 @@ public class CalculatorActivity extends Activity {
 		}
 		
 		if(result.toString().indexOf(".") >= 0){
-			return result.toString().replaceAll("¥¥.0+$|0+$", "");
+			return result.toString().replaceAll("\\.0+$|0+$", "");
 //			return result.toString().replaceAll("¥.0+$", "");
 		}else{
 			return result.toString();
